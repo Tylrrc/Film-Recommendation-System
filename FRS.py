@@ -10,4 +10,6 @@ __email__ = "tylrrc@gmail.com"
 __status__ = "Under construction"
 
 print ("Welcome to the Film Recommendation System!")
-print ("Please enter a film on which to base recommendations: ")
+choice = raw_input("Please enter a film on which to base recommendations: ")
+
+print ("Base film: " + choice)
