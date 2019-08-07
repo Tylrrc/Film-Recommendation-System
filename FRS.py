@@ -1,16 +1,8 @@
-__author__ = "T Murder"
-__copyright__ = "Nope!"
-__credits__ = "T Murder"
-__license__ = "None yet"
-__email__ = "tylrrc@gmail.com"
-__status__ = "Under construction"
+# TODO: Clean movies.csv dataset by removing all years and quotes
 
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 import warnings
 
-sns.set_style('dark')
 warnings.filterwarnings('ignore')
 
 movies = pd.read_csv("filmData/ml-latest-small/movies.csv")
@@ -37,6 +29,5 @@ corrFG.dropna(inplace=True)
 corrFG = corrFG.join(ratings_mean_count['rating_counts'])
 
 print(corrFG[corrFG ['rating_counts']>50].sort_values('Correlation', ascending=False).head(25))
-
 
 
