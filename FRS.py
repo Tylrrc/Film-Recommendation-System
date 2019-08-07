@@ -1,9 +1,7 @@
 __author__ = "T Murder"
 __copyright__ = "Nope!"
 __credits__ = "T Murder"
-__license__ = "GPL"
-__version__ = "1.0.1"
-__maintainer__ = "Rob Knight"
+__license__ = "None yet"
 __email__ = "tylrrc@gmail.com"
 __status__ = "Under construction"
 
