@@ -1,13 +1,14 @@
 # TODO: Clean movies.csv dataset by removing all years and quotes
 
-import pandas as pd
 import warnings
+
+import pandas as pd
 
 warnings.filterwarnings('ignore')
 
-movies = pd.read_csv("filmData/ml-latest-small/movies.csv")
+movies = pd.read_csv("dataset/movies.csv")
 
-ratings = pd.read_csv("filmData/ml-latest-small/ratings.csv")
+ratings = pd.read_csv("dataset/ratings.csv")
 
 movie_ratings_combo = pd.merge(movies, ratings, on='movieId')
 

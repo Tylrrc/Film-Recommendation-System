@@ -4,6 +4,7 @@ import pandas as pd
 
 data = pd.read_csv('dataset/movies.csv')
 
+filmID = []
 years = []
 films = []
 genres = []
@@ -15,11 +16,15 @@ i = 0
 for index, row in data.iterrows():
     films.append(row['title'].replace(years[i], ''))
     i=i+1
+    filmID.append(i)
 
 for index, row in data.iterrows():
     gList = row['genres'].split('|')
     genres.append(gList)
 
-newData = pd.DataFrame(list(zip(films, genres, years)))
+newData = pd.DataFrame(list(zip(filmID, films, genres, years)))
+newData.columns = ['ID','film','genre(s)','year']
 
-newData.to_csv(r'dataset/movies_improved.csv')
+newData.to_csv(r'dataset/movies_improved.csv', index=False)
+
+print(newData.head(150).to_string())
