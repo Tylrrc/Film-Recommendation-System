@@ -2,10 +2,26 @@
 
 import pandas as pd
 
-data = pd.read_csv('~/Downloads/ml-latest-small/movies.csv')
+data = pd.read_csv('dataset/movies.csv')
 
-#data = pd.read_csv('~/Downloads/ml-20m/movies.csv')
+#data = pd.read_csv('dataset/movies.csv')
 
-data['title'] = data['title'].str.replace(r'[(\d4)]', '')
+years = []
+films = []
+genres = []
 
-print(data.head(100).to_string())
+for index, row in data.iterrows():
+    years.append(row['title'][-6:])
+
+i = 0
+for index, row in data.iterrows():
+    films.append(row['title'].replace(years[i], ''))
+    i=i+1
+
+for index, row in data.iterrows():
+    gList = row['genres'].split('|')
+    genres.append(gList)
+
+
+for i, j, k in zip(films, genres, years):
+    print(i + "\t" + str(j) + "\t" + k)
