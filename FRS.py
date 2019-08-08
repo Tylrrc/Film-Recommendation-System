@@ -1,5 +1,3 @@
-# TODO: Clean movies.csv dataset by removing all years and quotes
-
 import warnings
 
 import pandas as pd
