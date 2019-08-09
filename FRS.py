@@ -2,6 +2,7 @@
 # TODO: Confirm accuracy of new vs. old results
 # TODO: Mechanism to compare genre lists
 # TODO: Devise a point system
+# TODO: test!
 
 import warnings
 
