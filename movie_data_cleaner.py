@@ -1,5 +1,3 @@
-# TODO: Instead of completely removing the release year from the dataset, split the title column into <title> and <release_year>
-
 import pandas as pd
 
 data = pd.read_csv('dataset/movies.csv')
@@ -15,8 +13,8 @@ for index, row in data.iterrows():
 i = 0
 for index, row in data.iterrows():
     films.append(row['title'].replace(years[i], ''))
-    i=i+1
-    filmID.append(i)
+    filmID.append(row['movieId'])
+    i = i + 1
 
 for index, row in data.iterrows():
     gList = row['genres'].split('|')
