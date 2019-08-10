@@ -12,7 +12,7 @@ for index, row in data.iterrows():
 
 i = 0
 for index, row in data.iterrows():
-    films.append(row['title'].replace(years[i], ''))
+    films.append(row['title'].replace(' ' + years[i], ''))
     filmID.append(row['movieId'])
     i = i + 1
 
@@ -21,7 +21,7 @@ for index, row in data.iterrows():
     genres.append(gList)
 
 newData = pd.DataFrame(list(zip(filmID, films, genres, years)))
-newData.columns = ['ID','film','genre(s)','year']
+newData.columns = ['movieId','title','genres','year']
 
 newData.to_csv(r'dataset/movies_improved.csv', index=False)
 
