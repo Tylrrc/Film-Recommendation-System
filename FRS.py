@@ -14,10 +14,6 @@ movie_ratings_combo = pd.merge(movies, ratings, on='movieId')
 
 ratings_mean_count = pd.DataFrame(movie_ratings_combo.groupby('title')['rating'].mean())
 
-#print(ratings_mean_count.to_string())
-
-# TODO: Need to merge ratings_mean_count and movie_ratings_combo on 'title'
-
 MVAvg = pd.merge(ratings_mean_count, movie_ratings_combo, on='title')
 
 movies_by_avg_rating = pd.DataFrame(MVAvg.groupby('title')['rating_y'].mean().sort_values(ascending=False))
