@@ -23,6 +23,8 @@ for index, row in data.iterrows():
 newData = pd.DataFrame(list(zip(filmID, films, genres, years)))
 newData.columns = ['movieId','title','genres','year']
 
+newData = newData.sort_values(by=['title'])
+
 newData.to_csv(r'dataset/movies_improved.csv', index=False)
 
 print(newData.head(150).to_string())

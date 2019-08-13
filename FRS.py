@@ -1,6 +1,5 @@
 # TODO: Mechanism to compare genre lists
-# TODO: Remove duplicates from finalSet
-
+# TODO: Need to fix TEST.csv output. Results missing: reason undetermined for now
 import warnings
 
 import pandas as pd
@@ -24,11 +23,14 @@ movies_by_avg_rating = pd.DataFrame(MVAvg.groupby('title')['rating_y'].mean().so
 movies_by_avg_rating["Genre Matches"] = ""
 
 movies_avgRtg_genres = pd.merge(ratings_mean_count, movies, on='title')
-movies_avgRtg_genres = pd.merge(movies_avgRtg_genres, tags, on='movieId')
+
+movies_avgRtg_genres = pd.merge(movies_avgRtg_genres, tags, on=['movieId'], how='outer')
+
+#print(movies_avgRtg_genres.to_string())
 
 tag_lists = pd.DataFrame(movies_avgRtg_genres.groupby('title')['tag'].apply(list))
 
-del movies_avgRtg_genres['movieId']
+#del movies_avgRtg_genres['movieId']
 del movies_avgRtg_genres['year']
 del movies_avgRtg_genres['userId']
 del movies_avgRtg_genres['timestamp']
@@ -37,20 +39,17 @@ movies_avgRtg_genres = pd.merge(movies_avgRtg_genres, tag_lists, on='title')
 
 finalSet = movies_avgRtg_genres[['title', 'rating', 'genres', 'tag_y']]
 
-df = pd.DataFrame(data=finalSet)
+df = pd.DataFrame(data=movies_avgRtg_genres[['movieId','title', 'rating', 'genres', 'tag_y']]).drop_duplicates(subset=['movieId'])
+#print(df.to_string())
 
+# I D E A L  O U T P U T!!!!!!!!!!!!!!!!!!
+#print(df.to_string())
 
-#Ordered by avg rating
-print(df.to_string())
-
-#Ordered by title
-
-
-
+movies_avgRtg_genres.drop_duplicates(subset='movieId').to_csv(r'dataset/TEST.csv', index=False)
 
 #ratings_mean_count['rating_counts'] = pd.DataFrame(movie_ratings_combo.groupby('title')['rating'].count())
 #print(ratings_mean_count.to_string())
-user_movie_rating = movie_ratings_combo.pivot_table(index='userId', columns='title', values='rating')
+#user_movie_rating = movie_ratings_combo.pivot_table(index='userId', columns='title', values='rating')
 
 #selection = input("Enter a film on which to base recommendations: ")
 
@@ -70,5 +69,6 @@ user_movie_rating = movie_ratings_combo.pivot_table(index='userId', columns='tit
 #corrFG = corrFG.join(ratings_mean_count['rating_counts'])
 
 #print(corrFG[corrFG ['rating_counts']>50].sort_values('Correlation', ascending=False).head(25))
+exit()
 
 
