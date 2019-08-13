@@ -1,4 +1,5 @@
 # TODO: Mechanism to compare genre lists
+# TODO: Remove duplicates from finalSet
 
 import warnings
 
@@ -10,6 +11,8 @@ movies = pd.read_csv("dataset/movies_improved.csv")
 
 ratings = pd.read_csv("dataset/ratings.csv")
 
+tags = pd.read_csv("dataset/tags.csv")
+
 movie_ratings_combo = pd.merge(movies, ratings, on='movieId')
 
 ratings_mean_count = pd.DataFrame(movie_ratings_combo.groupby('title')['rating'].mean())
@@ -18,28 +21,53 @@ MVAvg = pd.merge(ratings_mean_count, movie_ratings_combo, on='title')
 
 movies_by_avg_rating = pd.DataFrame(MVAvg.groupby('title')['rating_y'].mean().sort_values(ascending=False))
 
-print(movies_by_avg_rating.to_string())
+movies_by_avg_rating["Genre Matches"] = ""
 
-#print(MVAvg.head(20).to_string())
+movies_avgRtg_genres = pd.merge(ratings_mean_count, movies, on='title')
+movies_avgRtg_genres = pd.merge(movies_avgRtg_genres, tags, on='movieId')
 
-ratings_mean_count['rating_counts'] = pd.DataFrame(movie_ratings_combo.groupby('title')['rating'].count())
+tag_lists = pd.DataFrame(movies_avgRtg_genres.groupby('title')['tag'].apply(list))
 
+del movies_avgRtg_genres['movieId']
+del movies_avgRtg_genres['year']
+del movies_avgRtg_genres['userId']
+del movies_avgRtg_genres['timestamp']
+
+movies_avgRtg_genres = pd.merge(movies_avgRtg_genres, tag_lists, on='title')
+
+finalSet = movies_avgRtg_genres[['title', 'rating', 'genres', 'tag_y']]
+
+df = pd.DataFrame(data=finalSet)
+
+
+#Ordered by avg rating
+print(df.to_string())
+
+#Ordered by title
+
+
+
+
+#ratings_mean_count['rating_counts'] = pd.DataFrame(movie_ratings_combo.groupby('title')['rating'].count())
+#print(ratings_mean_count.to_string())
 user_movie_rating = movie_ratings_combo.pivot_table(index='userId', columns='title', values='rating')
 
-selection = input("Enter a film on which to base recommendations: ")
+#selection = input("Enter a film on which to base recommendations: ")
 
-selection_row = user_movie_rating[selection]
+#selection_row = user_movie_rating[selection]
 
 #print(selection_row.to_string()) #"selection_row"== Left column: Critic ID::::::Right column: Critic score
                                  # If a critic didn't vote on the movie, a value of NaN is seen as opposed to a score.
                                  # If a critic DID vote, then a 0.0-5.0 score is seen.
 
-similar = user_movie_rating.corrwith(selection_row)
+#print(ratings_mean_count.to_string())
 
-corrFG = pd.DataFrame(similar, columns=['Correlation'])
-corrFG.dropna(inplace=True)
+#similar = user_movie_rating.corrwith(selection_row)
 
-corrFG = corrFG.join(ratings_mean_count['rating_counts'])
+#corrFG = pd.DataFrame(similar, columns=['Correlation'])
+#corrFG.dropna(inplace=True)
+
+#corrFG = corrFG.join(ratings_mean_count['rating_counts'])
 
 #print(corrFG[corrFG ['rating_counts']>50].sort_values('Correlation', ascending=False).head(25))
 
