@@ -1,0 +1,17 @@
+The following films, for some reason or another, are not showing up in the end result .csv file.
+Base file: movies_improved.csv
+
+1076	Innocents, The
+2939	Niagara
+3338	For All Mankind
+3456	Color of Paradise, The (Rang-e khoda)
+4194	I Know Where I'm Going!
+5721	Chosen, The
+6668	Road Home, The (Wo de fu qin mu qin)
+6849	Scrooge
+7792	Parallax View, The
+8765	This Gun for Hire
+25855	Roaring Twenties, The
+30892	In the Realms of the Unreal
+32371	Call Northside 777
+85565	Chalet Girl

@@ -1,5 +1,6 @@
 # TODO: Mechanism to compare genre lists
 # TODO: Need to fix TEST.csv output. Results missing: reason undetermined for now
+# TODO: Redo earlier data manipulations. Use 'movieID' to group everything.
 import warnings
 
 import pandas as pd
@@ -39,11 +40,13 @@ movies_avgRtg_genres = pd.merge(movies_avgRtg_genres, tag_lists, on='title')
 
 finalSet = movies_avgRtg_genres[['title', 'rating', 'genres', 'tag_y']]
 
-df = pd.DataFrame(data=movies_avgRtg_genres[['movieId','title', 'rating', 'genres', 'tag_y']]).drop_duplicates(subset=['movieId'])
+#df = pd.DataFrame(data=movies_avgRtg_genres[['movieId', 'title', 'rating', 'genres', 'tag_y']]).drop_duplicates(subset=[])
 #print(df.to_string())
 
 # I D E A L  O U T P U T!!!!!!!!!!!!!!!!!!
 #print(df.to_string())
+
+MVAvg.to_csv('surewhynot.csv')
 
 movies_avgRtg_genres.drop_duplicates(subset='movieId').to_csv(r'dataset/TEST.csv', index=False)
 
