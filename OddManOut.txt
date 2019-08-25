@@ -1,4 +1,4 @@
-The following films, for some reason or another, are not showing up in the end result .csv file.
+The following films are excluded from the final set because they have no ratings.
 Base file: movies_improved.csv
 
 1076	Innocents, The
