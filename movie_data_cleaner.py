@@ -35,31 +35,35 @@ tags = pd.read_csv("dataset/tags.csv")
 
 movie_ratings_combo = pd.merge(movies, ratings, on='movieId')
 
-ratings_mean_count = pd.DataFrame(movie_ratings_combo.groupby('title')['rating'].mean())
+ratings_mean_count = pd.DataFrame(movie_ratings_combo.groupby('movieId')['rating'].mean())
 
-MVAvg = pd.merge(ratings_mean_count, movie_ratings_combo, on='title')
+MVAvg = pd.merge(ratings_mean_count, movie_ratings_combo, on='movieId')
 
-movies_by_avg_rating = pd.DataFrame(MVAvg.groupby('title')['rating_y'].mean().sort_values(ascending=False))
+movies_by_avg_rating = pd.DataFrame(MVAvg.groupby('movieId')['rating_y'].mean().sort_values(ascending=False))
 
 movies_by_avg_rating["Genre Matches"] = ""
 
-movies_avgRtg_genres = pd.merge(ratings_mean_count, movies, on='title')
+movies_avgRtg_genres = pd.merge(ratings_mean_count, movies, on='movieId')
 
 movies_avgRtg_genres = pd.merge(movies_avgRtg_genres, tags, on=['movieId'], how='outer')
 
 #print(movies_avgRtg_genres.to_string())
 
-tag_lists = pd.DataFrame(movies_avgRtg_genres.groupby('title')['tag'].apply(list))
+tag_lists = pd.DataFrame(movies_avgRtg_genres.groupby('movieId')['tag'].apply(list))
 
 #del movies_avgRtg_genres['movieId']
 del movies_avgRtg_genres['year']
 del movies_avgRtg_genres['userId']
 del movies_avgRtg_genres['timestamp']
 
-movies_avgRtg_genres = pd.merge(movies_avgRtg_genres, tag_lists, on='title')
+movies_avgRtg_genres = pd.merge(movies_avgRtg_genres, tag_lists, on='movieId')
 
 finalSet = movies_avgRtg_genres[['title', 'rating', 'genres', 'tag_y']]
 
+print(finalSet.to_string())
+
 df = pd.DataFrame(data=movies_avgRtg_genres[['movieId', 'title', 'rating', 'genres', 'tag_y']]).drop_duplicates(subset=['movieId'])
+
+df['title'] = df['title'].str.lower()
 
 df.to_csv('dataset/MasterSet.csv')
